@@ -1,15 +1,13 @@
 package com.careerdevs.gorestfinal.validation;
 
 import com.careerdevs.gorestfinal.models.Comment;
-import com.careerdevs.gorestfinal.models.User;
 import com.careerdevs.gorestfinal.repositories.CommentRepository;
-import com.careerdevs.gorestfinal.repositories.UserRepository;
 
 import java.util.Optional;
 
-public class CommentValidation { // CANNOT CREATE NEW COMMENTS BECAUSE USERREPO IS NULL
+public class CommentValidation { // CANNOT CREATE NEW COMMENTS BECAUSE USERREPO IS NULL. solution: removed userrepo and associated validation.
 
-    public static ValidationError validateComment(Comment comment, CommentRepository commentRepo, UserRepository userRepo, boolean isUpdate) throws IllegalAccessException {
+    public static ValidationError validateComment(Comment comment, CommentRepository commentRepo, /* UserRepository userRepo, */ boolean isUpdate) throws IllegalAccessException {
 
         ValidationError errors = new ValidationError();
 
@@ -41,14 +39,14 @@ public class CommentValidation { // CANNOT CREATE NEW COMMENTS BECAUSE USERREPO 
             errors.addError("email", "Email cannot be left blank.");
         }
 
-        if (commentUserId == 0) {
+        /* if (commentUserId == 0) {
             errors.addError("post_id", "Post_ID cannot be left blank.");
         } else {
             // is the commentUserId connected to an existing user.
             Optional<User> foundUser = userRepo.findById(commentUserId);
 
             errors.addError("post_id", "Post_ID is invalid because there is no user found with the ID: " + commentUserId);
-        }
+        } */
 
         return errors;
 

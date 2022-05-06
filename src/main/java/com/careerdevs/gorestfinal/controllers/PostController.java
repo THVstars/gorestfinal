@@ -2,7 +2,6 @@ package com.careerdevs.gorestfinal.controllers;
 
 import com.careerdevs.gorestfinal.models.Post;
 import com.careerdevs.gorestfinal.repositories.PostRepository;
-import com.careerdevs.gorestfinal.repositories.UserRepository;
 import com.careerdevs.gorestfinal.utils.ApiErrorHandling;
 import com.careerdevs.gorestfinal.validation.PostValidation;
 import com.careerdevs.gorestfinal.validation.ValidationError;
@@ -25,7 +24,6 @@ public class PostController {
 
     @Autowired
     PostRepository postRepository;
-    UserRepository userRepository;
 
     @GetMapping("/test")
     public String testRoute() {
@@ -129,7 +127,7 @@ public class PostController {
 
         try {
 
-            ValidationError errors = PostValidation.validatePost(newPost, postRepository, userRepository, false);
+            ValidationError errors = PostValidation.validatePost(newPost, postRepository, false);
             if (errors.hasError()) {
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, errors.toJSONString());
             }
@@ -233,7 +231,7 @@ public class PostController {
 
         try {
 
-            ValidationError errors = PostValidation.validatePost(updatePost, postRepository, userRepository, true);
+            ValidationError errors = PostValidation.validatePost(updatePost, postRepository, true);
             if (errors.hasError()) {
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, errors.toJSONString());
             }

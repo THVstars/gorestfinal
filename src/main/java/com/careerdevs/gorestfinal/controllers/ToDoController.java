@@ -3,7 +3,6 @@ package com.careerdevs.gorestfinal.controllers;
 import com.careerdevs.gorestfinal.models.ToDo;
 
 import com.careerdevs.gorestfinal.repositories.ToDoRepository;
-import com.careerdevs.gorestfinal.repositories.UserRepository;
 import com.careerdevs.gorestfinal.utils.ApiErrorHandling;
 import com.careerdevs.gorestfinal.validation.ToDoValidation;
 import com.careerdevs.gorestfinal.validation.ValidationError;
@@ -26,7 +25,6 @@ public class ToDoController {
 
     @Autowired
     ToDoRepository toDoRepository;
-    UserRepository userRepository;
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getToDoById (@PathVariable("id") String id) {
@@ -125,7 +123,7 @@ public class ToDoController {
 
         try {
 
-            ValidationError errors = ToDoValidation.validateToDo(newToDo, toDoRepository, userRepository, false);
+            ValidationError errors = ToDoValidation.validateToDo(newToDo, toDoRepository, false);
             if (errors.hasError()) {
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, errors.toJSONString());
             }
@@ -229,7 +227,7 @@ public class ToDoController {
 
         try {
 
-            ValidationError errors = ToDoValidation.validateToDo(updateToDo, toDoRepository, userRepository, true);
+            ValidationError errors = ToDoValidation.validateToDo(updateToDo, toDoRepository, true);
             if (errors.hasError()) {
                 throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, errors.toJSONString());
             }

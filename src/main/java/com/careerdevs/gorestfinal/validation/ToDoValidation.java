@@ -1,15 +1,13 @@
 package com.careerdevs.gorestfinal.validation;
 
 import com.careerdevs.gorestfinal.models.ToDo;
-import com.careerdevs.gorestfinal.models.User;
 import com.careerdevs.gorestfinal.repositories.ToDoRepository;
-import com.careerdevs.gorestfinal.repositories.UserRepository;
 
 import java.util.Optional;
 
-public class ToDoValidation { // CANNOT CREATE NEW TODOS BECAUSE USERREPO IS NULL
+public class ToDoValidation { // CANNOT CREATE NEW TODOS BECAUSE USERREPO IS NULL. solution: removed userrepo and associated validation.
 
-    public static ValidationError validateToDo(ToDo toDo, ToDoRepository toDoRepo, UserRepository userRepo, boolean isUpdate) throws IllegalAccessException {
+    public static ValidationError validateToDo(ToDo toDo, ToDoRepository toDoRepo, /* UserRepository userRepo, */ boolean isUpdate) throws IllegalAccessException {
 
         ValidationError errors = new ValidationError();
 
@@ -41,14 +39,14 @@ public class ToDoValidation { // CANNOT CREATE NEW TODOS BECAUSE USERREPO IS NUL
             errors.addError("status", "Status cannot be left blank.");
         }
 
-        if (toDoUserId == 0) {
+        /* if (toDoUserId == 0) {
             errors.addError("user_id", "User_ID cannot be left blank.");
         } else {
             // is the toDoUserId connected to an existing user.
             Optional<User> foundUser = userRepo.findById(toDoUserId);
 
             errors.addError("user_id", "User_ID is invalid because there is no user found with the ID: " + toDoUserId);
-        }
+        } */
 
         return errors;
     }
